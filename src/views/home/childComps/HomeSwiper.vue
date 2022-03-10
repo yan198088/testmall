@@ -2,7 +2,7 @@
   <swiper>
     <swiper-item v-for="item in banners">
       <a :href="item.link">
-        <img :src="item.image">
+        <img :src="item.image" @load="imageLoad">
       </a>
     </swiper-item>
   </swiper>
@@ -23,6 +23,21 @@ export default {
       type:Array,
       default(){
         return [];
+      }
+    }
+  },
+  data(){
+    return{
+      isFlag:true
+    }
+  },
+  methods:{
+    imageLoad() {
+      //加一层这个是为了防止发四次，只需要发一次就够了
+      if(this.isFlag){
+        //当轮播图加载好后发信号给父组件
+        this.$emit("imageSwiperLoad")
+        this.isFlag = false;
       }
     }
   }

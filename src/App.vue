@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+<!--    注意 这个exclude就是去除的意思，把Detail模快整个去除，但是注意了，这个后面的值应该和模板里面name的值保持一致-->
+    <keep-alive exclude="Detail">
+      <router-view></router-view>
+    </keep-alive>
     <main-tab-bar ></main-tab-bar>
   </div>
 </template>

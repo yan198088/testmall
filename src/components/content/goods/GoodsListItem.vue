@@ -1,6 +1,7 @@
 <template>
-  <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="">
+  <div class="goods-item" @click="itemClick">
+    <!--在，每个图片加载的时候搞个监听，调用img.load方法-->
+    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -18,6 +19,16 @@ export default {
       default() {
         return {}
       }
+    }
+  },
+  methods:{
+    //想办法给传出去，让BScroll收到并刷新图片高度
+    imageLoad(){
+      this.$bus.$emit("itemImageLoad");
+    },
+    itemClick(){
+      //跳转到详情页，并且把id传进去
+      this.$router.push('/detail/'+this.goodsItem.iid)
     }
   }
 }
