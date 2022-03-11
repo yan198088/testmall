@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <!--在，每个图片加载的时候搞个监听，调用img.load方法-->
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -21,10 +21,20 @@ export default {
       }
     }
   },
+  computed:{
+    showImage(){
+      return this.goodsItem.image || this.goodsItem.show.img;
+    }
+  },
   methods:{
     //想办法给传出去，让BScroll收到并刷新图片高度
     imageLoad(){
-      this.$bus.$emit("itemImageLoad");
+      // this.$bus.$emit("itemImageLoad");
+      if(this.$route.path.indexOf('/home')!==-1) {
+        this.$bus.$emit('homeItemImgLoad');
+      }else if(this.$route.path.indexOf('/detail')!==-1) {
+        this.$bus.$emit('detailItemImgLoad');
+      }
     },
     itemClick(){
       //跳转到详情页，并且把id传进去

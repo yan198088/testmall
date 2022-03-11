@@ -9,6 +9,13 @@ export function getDetail(iid){
   })
 }
 
+//评论
+export function getRecommend() {
+  return request({
+    url: '/recommend'
+  })
+}
+
 //这样包装，到时候 就可以这么调用
 //g.title    g.desc
 export class Goods {

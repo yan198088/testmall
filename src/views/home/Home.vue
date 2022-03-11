@@ -90,7 +90,7 @@ export default {
     const refresh = debounce(this.$refs.scroll.refresh,50);
     //因为 放在created里面可能监听不到refs所以放在了mounted里面
     //监听图片加载完成
-    this.$bus.$on("itemImageLoad",()=>{
+    this.$bus.$on("homeItemImgLoad",()=>{
       //调用Scroll里面的这个方法
       // this.$refs.scroll.refresh();
       refresh();
