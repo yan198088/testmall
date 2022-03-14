@@ -1,5 +1,8 @@
 @import "./normalize.css";
 
+/*下面这一行代码是解决fastClick的点击错误*/
+* { touch-action: pan-y; }
+
 /*:root -> 获取根元素html*/
 :root {
   --color-text: #666;

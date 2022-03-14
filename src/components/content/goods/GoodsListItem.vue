@@ -1,7 +1,9 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <!--在，每个图片加载的时候搞个监听，调用img.load方法-->
-    <img :src="showImage" alt="" @load="imageLoad">
+    <!--在，每个图片加载的时候搞个监听，调用img.load方法
+        v-lazy就是图片懒加载，使用了插件
+    -->
+    <img v-lazy="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>

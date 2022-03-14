@@ -2,11 +2,6 @@
   <div id="detail" name="Detail">
     <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="detailnav"/>
     <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
-      <ul>
-        <li v-for="item in $store.state.cartList">
-          {{item}}
-        </li>
-      </ul>
       <detail-swiper :top-images = "topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
@@ -38,6 +33,7 @@ import BackTop from "@/components/content/backTop/BackTop";
 
 import {getDetail,getRecommend,Goods,Shop,GoodsParam} from "@/network/detail";
 import {debounce} from "@/common/utils";
+import {mapActions} from "vuex" //注意这个是从vuex里面导入的，而不是从store里面的actions导入的
 
 export default {
   name: "Detail",
@@ -117,6 +113,8 @@ export default {
 
   },
   methods: {
+    //映射store下的actions里面的addCart方法到这个里面
+    ...mapActions(['addCart']),
     //调用scroll里面的刷新函数
     detailImageLoad(){
       this.$refs.scroll.refresh();
@@ -157,7 +155,14 @@ export default {
       product.iid = this.iid;
       product.realPrice = this.goods.realPrice;
 
-      this.$store.dispatch("addCart",product);
+      //这种方法采用的是映射的形式，而下面注释中的方法是正常的通过store来调用的
+      this.addCart(product).then(res=>{
+         // 这个是调用toast弹窗
+        this.$toast.show(res,2000)
+      })
+      // this.$store.dispatch("addCart",product).then(res=>{
+      //   console.log(res);
+      // })
 
     }
 
